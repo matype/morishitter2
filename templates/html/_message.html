@@ -1,0 +1,10 @@
+{# messages #}
+{% if MESSAGE_ALERT %}
+  <div class="alert {% if MESSAGE_ALERT.type %}alert-{{MESSAGE_ALERT.type}}{% else %}alert{% endif %} alert-block">
+    <a class="close" data-dismiss="alert">×</a>
+    {% if MESSAGE_ALERT.heading %}<h4 class="alert-heading">{{MESSAGE_ALERT.heading}}</h4>{% endif %}
+    {% for message in MESSAGE_ALERT.content %}
+      {{message}}
+    {% endfor %}
+  </div>
+{% endif %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block TITLE %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    {% include "_css_loader.html" %}
+    <link rel="shortcut icon" href="../../htdocs/image/ikasama.ico">
+    {#<link rel="shortcut icon" href="{{ASSETS_DIR}}/ico/favicon.ico"> #}
+  </head>
+
+  <body>
+    {% include "_static_nav.html" %}
+    <div class="container">
+      {% include "_message.html" %}
+
+
+
+      {% block content %}
+      {% endblock content %}
+    </div>
+    {% include "_js_loader.html" %}
+  </body>
+</html>

@@ -1,0 +1,33 @@
+
+{% if PAGINATION %}
+{% set start = ((PAGINATION.page - PAGINATION.num_prev) > 0) ? (PAGINATION.page - PAGINATION.num_prev) : 1 %}
+{% set end =  ((PAGINATION.page + PAGINATION.num_next) > PAGINATION.end_page) ? PAGINATION.end_page : (PAGINATION.page + PAGINATION.num_next) %}
+{% set prev = ((PAGINATION.page - 1) > 0) ? (PAGINATION.page - 1) : 1 %}
+{% set next = ((PAGINATION.page + 1) > PAGINATION.end_page) ? PAGINATION.end_page : (PAGINATION.page + 1) %}
+
+<div class="pagination pagination-centered">
+  <ul>
+    {% if PAGINATION.page > 1 %}<li><a href="{{PAGINATION.url_format|format(prev)}}">{{PAGINATION.left|raw}}</a></li>{% endif %}
+    {% if start == 2 %}
+      <li><a href="{{PAGINATION.url_format|format(1)}}">1</a></li>
+    {% elseif start > 2 %}
+      <li><a href="{{PAGINATION.url_format|format(1)}}">1</a></li>
+      <li class="disabled"><a href="#">...</a></li>
+    {% endif %}
+    {% for page in range(start, end) %}
+    {% if page == PAGINATION.page %}
+      <li class="active"><a href="{{PAGINATION.url_format|format(page)}}">{{page}}</a></li>
+    {% else %}
+      <li><a href="{{PAGINATION.url_format|format(page)}}">{{page}}</a></li>    
+    {% endif %}
+    {% endfor %}
+    {% if end == (PAGINATION.end_page - 1) %}
+      <li><a href="{{PAGINATION.url_format|format(PAGINATION.end_page)}}">{{PAGINATION.end_page}}</a></li>
+    {% elseif end < (PAGINATION.end_page - 1) %}
+      <li class="disabled"><a href="#">...</a></li>
+      <li><a href="{{PAGINATION.url_format|format(PAGINATION.end_page)}}">{{PAGINATION.end_page}}</a></li>    
+    {% endif %}
+    {% if PAGINATION.page < PAGINATION.end_page %}<li><a href="{{PAGINATION.url_format|format(next)}}">{{PAGINATION.right|raw}}</a></li>{% endif %}
+  </ul>
+</div>
+{% endif %}
