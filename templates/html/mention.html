@@ -4,17 +4,18 @@
 morishitter
 {% endblock %}
 {% block content %}
+
 <br><br>
 
 <a class="btn" href="tweet.php">Home</a>
 <a class="btn" href="mention.php">Mention</a>
 <a class="btn" href="fav.php">Favorites</a>
 <a class="btn" href="profile.php">Profile</a>
-<a class="btn" href="DM.php">DM</a>
+
 
 <br><br><br><br>
 
-<form class="form-horizontal" method="POST" action="tweet.php">
+<form class="form-horizontal" method="POST" action="mention.php">
   <fieldset>
     <div class="control-group">
       <label class="control-label" for="textarea">Tweet here</label>
@@ -28,10 +29,13 @@ morishitter
   </fieldset>
 </form>
 <br><br>
-{% for val in data %}
+
+{% for val in mention %}
+
+
 <IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> {{val.user.screen_name}} : {{val.text}}<br>
 
-<form class="form-horizontal" method="POST" action="tweet.php">
+<form class="form-horizontal" method="POST" action="mention.php">
   <div class="form-actions">
     <button class="btn" name="reply" value="{{val.user.screen_name}}">Reply</button>
     <button class="btn btn-warning" name="fav" value="{{val.id_str}}">★ </button>
@@ -39,12 +43,10 @@ morishitter
   </div>
 </form>
 
+
+
 {% endfor %}
+
 <br><br><br>
-<form class="form-horizontal" method="POST" action="tweet.php">
-  <div class="form-actions">
-    <button class="btn btn-success">Reload</button>
-  </div>
-</form>
-<br><br><br><br><br><br><br><br>
+
 {% endblock %}

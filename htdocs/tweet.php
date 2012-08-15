@@ -15,25 +15,55 @@ if (!($_SESSION['access_token'] && $_SESSION['access_token_secret'])) {
   $_SESSION['access_token'] = $token['oauth_token'];
   $_SESSION['access_token_secret'] = $token['oauth_token_secret'];
 }
-if($_POST) {
-  $params = array(
-    'status' => $tweet/* . "ʅ（´◔౪◔）ʃ"*/
-  );
-
+if (($_SESSION['access_token'] && $_SESSION['access_token_secret'])) {
   $client = new TwitterOAuth(
-    $consumer_key, $consumer_secret,
+    CONSUMER_KEY, CONSUMER_SECRET,
     $_SESSION['access_token'], $_SESSION['access_token_secret']
   );
-  //  var_dump($client);
-
-  $result = $client->post('statuses/update', $params);
-  if($result) {
-    $text['success'] = 'Your tweet has been sent.';
-    $Message->set('info', '', $text);
-    $Message->alert();
+  $data = $client->get('statuses/home_timeline');
+  /*
+  foreach ($data as $d) {
+    print '<pre>';
+    var_dump($d);
+    print '</pre';
+    exit;
+   // echo $d->user->screen_name . " : " .  $d->text . "<br/>";
   }
-//  var_dump($result);
+   */
+  if ($_POST) {
+    $params = array(
+      'status' => $tweet/* . "ʅ（´◔౪◔）ʃ"*/
+    );
+    $result = $client->post('statuses/update', $params);
+    if ($result) {
+      $text['success'] = 'Your tweet has been sent.';    
+      $Message->set('info', '', $text);
+      $Message->alert();
+    }
+  }
 }
 
-//$Twig->assign('hoge', $result);
+$reply = $_POST['reply'];
+$Twig->assign('reply', $reply);
+
+if ($_POST['fav']) {
+  $fav = $_POST['fav'];
+  $result_fav = $client->post("favorites/create/$fav");
+
+  $text_fav['fav_success'] = 'Add to your Favorites.';
+  $Message->set('warning', '', $text_fav);
+  $Message->alert();
+}
+
+
+if ($_POST['RT']) {
+  $RT = $_POST['RT'];
+  $result_RT = $client->post("statuses/retweet/$RT");
+
+  $text_RT['RT_success'] = 'This tweet has been Retweeted.';
+  $Message->set('success', '', $text_RT);
+  $Message->alert();
+}
+
+$Twig->assign('data', $data);
 echo $Twig->fetch('tweet.html');

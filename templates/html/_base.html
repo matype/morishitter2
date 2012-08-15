@@ -8,8 +8,8 @@
     <meta name="author" content="">
     
     {% include "_css_loader.html" %}
-    <link rel="shortcut icon" href="../../htdocs/image/ikasama.ico">
-    {#<link rel="shortcut icon" href="{{ASSETS_DIR}}/ico/favicon.ico"> #}
+    {#<link rel="shortcut icon" href="ikasama.ico">#}
+    <link rel="shortcut icon" href="{{ASSETS_DIR}}/ico/ikasama.ico"> 
   </head>
 
   <body>
@@ -20,6 +20,9 @@
 
 
       {% block content %}
+
+
+
       {% endblock content %}
     </div>
     {% include "_js_loader.html" %}

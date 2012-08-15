@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+
+{% block TITLE %}
+morishitter
+{% endblock %}
+{% block content %}
+
+<br><br>
+
+<a class="btn" href="tweet.php">Home</a>
+<a class="btn" href="mention.php">Mention</a>
+<a class="btn" href="fav.php">Favorites</a>
+<a class="btn" href="profile.php">Profile</a>
+
+<br><br><br><br>
+{{my_profile.user.description}}
+{% for val in my_profile %}
+
+
+<IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> {{val.user.screen_name}} : {{val.text}}<br>
+<br>
+
+
+{% endfor %}
+
+<br><br><br>
+
+{% endblock %}
