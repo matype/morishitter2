@@ -21,11 +21,10 @@ morishitter
 
 <br><br>
 
-{% for val in DM %}
+{% for val in DM_sent %}
 
 
 <IMG SRC="{{val.sender.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> <a href="others.php?id={{val.user.screen_name}}">@{{val.user.screen_name}}</a> : D {{val.recipient.screen_name}} {{val.text}}<br>
-	<p><small>{{val.created_at}}<small></p>
 <br>
 
 

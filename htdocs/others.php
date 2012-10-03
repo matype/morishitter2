@@ -20,33 +20,48 @@ if (($_SESSION['access_token'] && $_SESSION['access_token_secret'])) {
 		CONSUMER_KEY, CONSUMER_SECRET,
 		$_SESSION['access_token'], $_SESSION['access_token_secret']
 		);
-	$mention = $client->get('statuses/mentions');
-	/*
-	print '<pre>';
-	var_dump($mention);
-	print '</pre>';
-    exit;
-    */
-    if ($_POST) {
-    	$params = array(
-    		'status' => $tweet/* . "ʅ（´◔౪◔）ʃ"*/
-    		);
-    	$result = $client->post('statuses/update', $params);
-    	if ($result) {
-    		$text['success'] = 'Your tweet has been sent.';    
-    		$Message->set('info', '', $text);
-    		$Message->alert();
-    	}
-    }
+	$user_id = $_GET['id'];
+
+	$others = $client->get('statuses/user_timeline', array('screen_name'=>$user_id, 'count'=>50));
+	
+	if ($_POST['tweet']) {
+		$params = array(
+			'status' => $tweet/* . "ʅ（´◔౪◔）ʃ"*/
+			);
+		$result = $client->post('statuses/update', $params);
+		if ($result) {
+			$text['success'] = 'Your tweet has been sent.';    
+			$Message->set('info', '', $text);
+			$Message->alert();
+		}
+	}
 }
 
+if ($_POST['Fav_Attack']) {
+	
+	$others_name = $_POST['Fav_Attack'];
+	
+	$others2 = $client->get('statuses/user_timeline', array('user_id'=>$others_neme, 'count'=>15));
+
+	for($i = 0; $i < 15; $i++){
+		$latest_15_id = $others2[$i]->id_str;
+		$client->post("favorites/create/$latest_15_id");
+	}
+	$text_attack['attack_success'] = '!!!!! Fav Attack !!!!!';
+	$Message->set('warning', '', $text_attack);
+	$Message->alert();
+}
+
+
+//$user_id = $_GET['id'];
+//var_dump($user_id);exit;
 if ($_POST['reply']) {
-  $reply = $_POST['reply'];
-  $reply_fav = $_POST['reply_fav'];
+	$reply = $_POST['reply'];
+	$reply_fav = $_POST['reply_fav'];
   //var_dump($reply_fav);
   //var_dump($reply);exit;
-  $fav_reply = $client->post("favorites/create/$reply_fav");
-  $Twig->assign('reply', $reply);
+	$fav_reply = $client->post("favorites/create/$reply_fav");
+	$Twig->assign('reply', $reply);
 }
 
 if ($_POST['fav']) {
@@ -72,6 +87,5 @@ if ($_POST['RT']) {
 //$my_fav = $connection->get('statuses/show');
 //var_dump($my_fav);
 
-$Twig->assign('mention', $mention);
-echo $Twig->fetch('mention.html');
-
+$Twig->assign('others', $others);
+echo $Twig->fetch('others.html');

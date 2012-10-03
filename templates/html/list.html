@@ -4,7 +4,6 @@
 morishitter
 {% endblock %}
 {% block content %}
-
 <br><br>
 
 <a class="btn" href="tweet.php">Home</a>
@@ -15,19 +14,22 @@ morishitter
 <a class="btn" href="list.php">List</a>
 
 <br><br><br><br>
+<table class="table table-bordered">
+  <thead>
+    <tr class="success">
+      <th>Lists</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for list in lists %}
+    <tr>
+      <td><a href="http://twitter.com/{{list.uri}}">{{list.uri}}</a> </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 
-{% for val in my_fav %}
-
-
-<IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> <a href="others.php?id={{val.user.screen_name}}">@{{val.user.screen_name}}</a> : {{val.text}}<br>
-	<p><small>{{val.created_at}}<small></p>
-<br>
-
-
-{% endfor %}
-
-<br><br><br>
 
 
 {% endblock %}

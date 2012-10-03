@@ -1,5 +1,8 @@
 <?php
 
+$id = $_GET['id'];
+$name = $_GET['name'];
+
 require_once(dirname(dirname(__FILE__)) . '/system/common.inc.php');
 require_once(dirname(dirname(__FILE__)) . '/system/twitteroauth/twitteroauth.php');
 define('CONSUMER_KEY', 'H2uI7VbrPZniS7gSrJHROw');
@@ -18,27 +21,21 @@ if (($_SESSION['access_token'] && $_SESSION['access_token_secret'])) {
 		CONSUMER_KEY, CONSUMER_SECRET,
 		$_SESSION['access_token'], $_SESSION['access_token_secret']
 		);
-	$my_profile = $client->get('statuses/user_timeline');
+	$follow = $client->post('friendships/create',
+	                        array('user_id'=>$id,
+	                       	      'screen_name'=>$name));
 	/*
 	print '<pre>';
-	var_dump($my_profile);
+	var_dump($follow);
 	
 	print '</pre>';
     exit;
     */
-}
-
-if ($_POST['delete']) {
-	$delete = $_POST['delete'];
-	$result_delete = $client->post("statuses/destroy/$delete");
-	$text_delete['deleted'] = 'This tweet has been Deleted.';
-	$Message->set('success', '', $text_delete);
-	$Message->alert();
+    $text_follow['followed'] = "You have followed @$name.";
+  	$Message->set('info', '', $text_follow);
+ 	$Message->alert();
 }
 
 
-//$my_fav = $connection->get('statuses/show');
-//var_dump($my_fav);
-
-$Twig->assign('my_profile', $my_profile);
-echo $Twig->fetch('profile.html');
+//$Twig->assign('follow', $follow);
+echo $Twig->fetch('follow.html');

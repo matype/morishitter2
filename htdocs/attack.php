@@ -18,27 +18,24 @@ if (($_SESSION['access_token'] && $_SESSION['access_token_secret'])) {
 		CONSUMER_KEY, CONSUMER_SECRET,
 		$_SESSION['access_token'], $_SESSION['access_token_secret']
 		);
-	$my_profile = $client->get('statuses/user_timeline');
-	/*
-	print '<pre>';
-	var_dump($my_profile);
 	
-	print '</pre>';
-    exit;
-    */
+	if ($_POST['Fav_Attack']) {
+	$others_id = $_POST['Fav_Attack'];
+	$others2 = $client->get('statuses/user_timeline', array('user_id'=>$others_id, 'count'=>16));
+
+		for($i = 0; $i < 15; $i++){
+			$latest_15_id = $others2[$i]->id_str;
+			$client->post("favorites/create/$latest_15_id");
+		}
+		$text_attack['attack_success'] = '!!!!! Fav Attack !!!!!';
+		$Message->set('warning', '', $text_attack);
+		$Message->alert();
+	}
+
+
+
 }
 
-if ($_POST['delete']) {
-	$delete = $_POST['delete'];
-	$result_delete = $client->post("statuses/destroy/$delete");
-	$text_delete['deleted'] = 'This tweet has been Deleted.';
-	$Message->set('success', '', $text_delete);
-	$Message->alert();
-}
 
-
-//$my_fav = $connection->get('statuses/show');
-//var_dump($my_fav);
-
-$Twig->assign('my_profile', $my_profile);
-echo $Twig->fetch('profile.html');
+//$Twig->assign('follow', $follow);
+echo $Twig->fetch('attack.html');

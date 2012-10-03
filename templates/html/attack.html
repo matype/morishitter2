@@ -14,20 +14,6 @@ morishitter
 <a class="btn" href="profile.php">Profile</a>
 <a class="btn" href="list.php">List</a>
 
-<br><br><br><br>
-
-
-{% for val in my_fav %}
-
-
-<IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> <a href="others.php?id={{val.user.screen_name}}">@{{val.user.screen_name}}</a> : {{val.text}}<br>
-	<p><small>{{val.created_at}}<small></p>
-<br>
-
-
-{% endfor %}
-
 <br><br><br>
-
 
 {% endblock %}

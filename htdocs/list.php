@@ -20,14 +20,12 @@ if (($_SESSION['access_token'] && $_SESSION['access_token_secret'])) {
     CONSUMER_KEY, CONSUMER_SECRET,
     $_SESSION['access_token'], $_SESSION['access_token_secret']
   );
-  $param = array("count" => 50);
-  $data = $client->get('statuses/home_timeline', $param);
-  
 
+  $lists = $client->get('lists');
+  $lists = $lists->lists;
 /*
   print '<pre>';
-  var_dump($data);
-  var_dump(end($data));
+  var_dump($lists);
   print '</pre>';
   exit;
 */
@@ -109,5 +107,5 @@ if (array_key_exists('more', $_POST)) {
   */
 }
 
-$Twig->assign('data', $data);
-echo $Twig->fetch('tweet.html');
+$Twig->assign('lists', $lists);
+echo $Twig->fetch('list.html');

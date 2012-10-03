@@ -18,27 +18,17 @@ if (($_SESSION['access_token'] && $_SESSION['access_token_secret'])) {
 		CONSUMER_KEY, CONSUMER_SECRET,
 		$_SESSION['access_token'], $_SESSION['access_token_secret']
 		);
-	$my_profile = $client->get('statuses/user_timeline');
+	$DM_sent = $client->get('direct_messages/sent');
 	/*
 	print '<pre>';
-	var_dump($my_profile);
-	
+	var_dump($DM_sent);
 	print '</pre>';
     exit;
     */
-}
-
-if ($_POST['delete']) {
-	$delete = $_POST['delete'];
-	$result_delete = $client->post("statuses/destroy/$delete");
-	$text_delete['deleted'] = 'This tweet has been Deleted.';
-	$Message->set('success', '', $text_delete);
-	$Message->alert();
-}
-
+    }
 
 //$my_fav = $connection->get('statuses/show');
 //var_dump($my_fav);
 
-$Twig->assign('my_profile', $my_profile);
-echo $Twig->fetch('profile.html');
+$Twig->assign('DM_sent', $DM_sent);
+echo $Twig->fetch('DM_sent.html');

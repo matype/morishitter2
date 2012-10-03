@@ -13,11 +13,24 @@ morishitter
 <a class="btn" href="DM.php">DM</a>
 <a class="btn" href="profile.php">Profile</a>
 <a class="btn" href="list.php">List</a>
+<form class="form-horizontal" method="POST" action="attack.php">
+  <div class="form-actions">
+    <button class="btn btn-warning btn-large" name="Fav_Attack" value="{{others[0].user.id}}">Fav Attack</button>
+  </div>
+</form>
 
 
 <br><br><br><br>
 
-<form class="form-horizontal" method="POST" action="mention.php">
+<IMG SRC="{{others[0].user.profile_image_url_https}}" ALT="icon" WIDTH="100" HEIGHT="100">
+  <h2>Bio</h2>
+  <p>{{others[0].user.description}}</p>
+  <a class="btn-info" href="follow.php?id={{others[0].user.id}}&name={{others[0].user.screen_name}}">Follow</a>
+  <a class="btn-danger" href="remove.php?id={{others[0].user.id}}&name={{others[0].user.screen_name}}">Remove</a>
+
+  <br><br><br>
+
+<form class="form-horizontal" method="POST" action="others.php">
   <fieldset>
     <div class="control-group">
       <label class="control-label" for="textarea">Tweet here</label>
@@ -32,13 +45,16 @@ morishitter
 </form>
 <br><br>
 
-{% for val in mention %}
 
 
-<IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> <a href="others.php?id={{val.user.screen_name}}">@{{val.user.screen_name}}</a> : {{val.text}}<br>
+
+{% for val in others %}
+
+
+<IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> {{val.user.screen_name}} : {{val.text}}<br>
   <p><small>{{val.created_at}}<small></p>
 
-<form class="form-horizontal" method="POST" action="mention.php">
+<form class="form-horizontal" method="POST" action="others.php">
   <div class="form-actions">
     <input type="hidden" name="reply_fav" value="{{val.id_str}}">
     <button class="btn" name="reply" value="{{val.user.screen_name}}">Reply</button>

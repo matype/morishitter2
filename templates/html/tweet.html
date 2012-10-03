@@ -9,8 +9,14 @@ morishitter
 <a class="btn" href="tweet.php">Home</a>
 <a class="btn" href="mention.php">Mention</a>
 <a class="btn" href="fav.php">Favorites</a>
-<a class="btn" href="profile.php">Profile</a>
 <a class="btn" href="DM.php">DM</a>
+<a class="btn" href="profile.php">Profile</a>
+<a class="btn" href="list.php">List</a>
+<form class="form-horizontal" method="POST" action="tweet.php">
+  <div class="form-actions">
+    <button class="btn btn-warning btn-large" name="Fav_Attack" value="1">Fav Attack</button>
+  </div>
+</form>
 
 <br><br><br><br>
 
@@ -29,10 +35,12 @@ morishitter
 </form>
 <br><br>
 {% for val in data %}
-<IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> {{val.user.screen_name}} : {{val.text}}<br>
+<IMG SRC="{{val.user.profile_image_url}}" ALT="icon" WIDTH="50" HEIGHT="50"> <a href="others.php?id={{val.user.screen_name}}">@{{val.user.screen_name}}</a> : {{val.text}}<br>
+  <p><small>{{val.created_at}}<small></p>
 
 <form class="form-horizontal" method="POST" action="tweet.php">
   <div class="form-actions">
+    <input type="hidden" name="reply_fav" value="{{val.id_str}}">
     <button class="btn" name="reply" value="{{val.user.screen_name}}">Reply</button>
     <button class="btn btn-warning" name="fav" value="{{val.id_str}}">★ </button>
     <button class="btn btn-info" name="RT" value="{{val.id_str}}">RT</button>
@@ -43,7 +51,7 @@ morishitter
 <br><br><br>
 <form class="form-horizontal" method="POST" action="tweet.php">
   <div class="form-actions">
-    <button class="btn btn-success">Reload</button>
+    <button class="btn btn-success" name="more">Read More</button>
   </div>
 </form>
 <br><br><br><br><br><br><br><br>
